@@ -1,9 +1,9 @@
-function [delta_ui, alpha] = optimize_dV_alpha(Isp1, fuel_type1, Isp2, fuel_type2, Isp3, fuel_type3, dV_total, guess, m_upper) % Function definition for the optimization
+function [delta_ui, alpha, R1, R2, R3, lambda1, lambda2, lambda3, m_01, m_02, m_03] = optimize_dV_alpha(Isp1, fuel_type1, Isp2, fuel_type2, Isp3, fuel_type3, dV_total, m_upper) % Function definition for the optimization
     fun = @optimal; % function defined at the end
     
     % Initial guesses for the variables
     % x0 = [2666, 2666, 2667, -1e-3]; % Initial guess
-    x0 = guess;
+    x0 = [dV_total/3, dV_total/3, dV_total/3, -1e-3];;
     
     % Solve the optimization problem
     x = fsolve(fun, x0); % solve the optimization problem
@@ -51,24 +51,24 @@ function [delta_ui, alpha] = optimize_dV_alpha(Isp1, fuel_type1, Isp2, fuel_type
         deltaV = 8200; % Total delta-v required
         g = 9.806; % Gravity, m/s^2
     
-        Isp1 = 350; % Isp for hydrocarbon (LOX/CH4)
-        Isp2 = 350; % Isp for hydrocarbon (LOX/CH4)
-        Isp3 = 450; % Isp for hydrogen (LOX/LH2)
+        % Isp1 = 350; % Isp for hydrocarbon (LOX/CH4)
+        % Isp2 = 350; % Isp for hydrocarbon (LOX/CH4)
+        % Isp3 = 450; % Isp for hydrogen (LOX/LH2)
     
         % Calculate structural coefficients epsilon for each stage
-        if (Isp1 == 450)  % hydrogen
+        if strcmp(fuel_type1, 'hydrogen')  % hydrogen
             eps1 = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*x(1)));
         else  % hydrocarbon
             eps1 = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*x(1)));
         end
     
-        if (Isp2 == 450)
+        if strcmp(fuel_type2, 'hydrogen')
             eps2 = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*x(2)));
         else
             eps2 = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*x(2)));
         end
     
-        if (Isp3 == 450)
+        if strcmp(fuel_type3, 'hydrogen')
             eps3 = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*x(3)));
         else
             eps3 = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*x(3)));
