@@ -10,6 +10,7 @@ function mass = calcEngineMass(in, rho_wall, R_c, L_c, sigma_h, nlines, thi, ofl
         nozzle_material_volume = nozzle_material_volume + wall_thickness * (xw(i+1) - xw(i)) * nozzle_width * 4;
     end
     mass_nozzle = nozzle_material_volume * rho_wall;
-    mass_chamber = 2 * pi * R_c * L_c * wall_thickness * rho_wall;
+    mass_chamber = 2 * pi * R_c * L_c * wall_thickness * rho_wall; % Assume cylindrical chamber, with chamber radius and height known. 
+    % Assume thin wall (thus ignore variation of inner and outer diameter)
     mass = mass_chamber + mass_nozzle;
 end
