@@ -10,12 +10,12 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp]=calcEngine(in, optimal_mode) % chamber 
     R_specific = in.R_specific;
     %-------------Analysis------------%
 
-    if cmpstr(optimal_mode == 'sea level')
+    if strcmp(optimal_mode, 'sea level')
         Pe = 101325; % Sea level ambient pressure
-    elseif cmpstr(optimal_mode == 'vacuum')
+    elseif strcmp(optimal_mode, 'vacuum')
         Pe = 1000; % vacuum ambient pressure, since it's impossible to really expand it to zero pressure, we take 1000 pa as required exit pressure      
     else
-        disp('error');
+        fprintf('error');
     end
     Me = Mach_from_expansion(Pe, P0, gamma); % Exit Mach number
     Te_T0 = temperature_ratio(Me, gamma); % Exit/Chamber pressure ratio
@@ -25,12 +25,12 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp]=calcEngine(in, optimal_mode) % chamber 
 
     rho0 = p0/(R_specific*T0); % Stagnation density
     m_dot = (density_ratio(1, gamma) * rho0) * At * np.sqrt(gamma * R_spec * T0 * temperature_ratio(1, gamma)); % Calculate mass flow rate at using throat conditions
-    if cmpstr(optimal_mode == 'sea level')
+    if strcmp(optimal_mode, 'sea level')
         Pa = 101325; % Sea level ambient pressure
-    elseif cmpstr(optimal_mode == 'vacuum')
+    elseif strcmp(optimal_mode, 'vacuum')
         Pa = 0; % vacuum ambient pressure, since it's impossible to really expand it to zero pressure, we take 1000 pa as required exit pressure      
     else
-        disp('error')
+        fprintf('error')
     end
     F = m_dot * ue + (Pe - Pa) * Ae_At * At; % Calculate thrust of the nozzle flow
     Isp = F/(m_dot * 9.806);
