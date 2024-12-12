@@ -31,14 +31,14 @@ num_eng_stg3 = 1;
 
 % --- Hydrogen Engine
 HY_Chamber_Pres = 350 * 1e5; % Pa, chamber pressure
-HY_throat_area = 0.1; % m2, throat area
+HY_throat_area = 0.2; % m2, throat area
 R_c_HY = 0.2; % m, engine chamber radius
 L_c_HY = 0.5; % m, engine chamber axial length
 
 % --- Hydrocarbon(LCH4) Engine
-HC_Chamber_Pres = 350 * 1e5; % Pa
-HC_throat_area = 0.1; % m2, throat area
-R_c_HC = 0.2; % m, engine chamber radius
+HC_Chamber_Pres = 150 * 1e5; % Pa
+HC_throat_area = 0.2; % m2, throat area
+R_c_HC = 0.25; % m, engine chamber radius
 L_c_HC = 0.5; % m, engine chamber axial length
 
 

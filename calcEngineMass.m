@@ -13,6 +13,8 @@ function mass = calcEngineMass(in, rho_wall, R_c, L_c, sigma_h, nlines, thi, ofl
     wall_thickness = p_c * R_c / sigma_h;
     nozzle_material_volume = 0; % volume occupied by the wall material of the chamber (volume of the shell excluding its interior)
     for i = 1:length(xw)-1
+        % TO DO: Add mach number & pressure code to decrease thickness as
+        % it goes
         nozzle_width = (yw(i) + yw(i+1))/2;
         nozzle_material_volume = nozzle_material_volume + wall_thickness * (xw(i+1) - xw(i)) * nozzle_width * 4;
     end
