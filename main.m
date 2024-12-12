@@ -67,14 +67,80 @@ m_engine_HC = calcEngineMass(in, rho_wall, R_c_HC, L_c_HC, sigma_h, 50, 0.1, 1);
 
 
 %---------------Upper Stage Analysis---------------%
-m_upper = 100000; % kg, Placeholder, by the end of upper stage analysis we should have the upper stage mass
 % Pavan already done the hand calc (or code?) on Overleaf doc, just need to copy paste the algorithm over here
+% Upper Stage Design for Mission from LEO to Moon and Back
+clear; clc;
+% Given Data
+Isp = 450; % specific impulse of the upper stage in seconds (LOX/LH2)
+g0 = 9.81; % gravitational constant in m/s^2
 
+% Delta-V values for each maneuver in km/s (converted to m/s)
+delta_Vs = [0.2, 2.46, 1.48, 0.68, 0.14, 0.68, 0.68, 0.14, 3.14] * 1000; % m/s
+delta_Vup = sum(delta_Vs);
+
+% Rocket equation to calculate mass ratio for each maneuver
+MR = exp(delta_Vs ./ (Isp * g0));
+
+% Calculate total mass ratio by multiplying all the individual mass ratios
+MR_total = prod(MR);
+
+% Display individual mass ratios and total mass ratio
+disp('Total Mass Ratio for upper stage:');
+disp(MR_total);
+
+
+% Calculate structural coefficients epsilon for each stage
+        if (Isp == 450)  % hydrogen
+            eps = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*delta_Vup));
+        else  % hydrocarbon
+            eps = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*delta_Vup));
+        end
+
+        disp('The structural coefficeint of upper stage :')
+        disp(eps)
+
+% Calculating Payload Ratio
+PL_ratio = (1-eps.* MR_total)./(MR_total - 1);
+
+%disp('Payload Ratio for upper Satge:')
+%disp(PL_ratio)
+
+% Mass of Payload + Cargo
+PL_mass = 5000; %kg
+
+% To calculate Intial Mass of the upper stage
+PL_fraction = PL_ratio/(PL_ratio+1);
+m01 = PL_mass/PL_fraction;
+
+%disp('Intial Mass of upper Stage / Wet Mass of upper stage (kg):')
+%disp(m01)
+
+% To calculate Burn Out Mass or Dry Mass
+mb1 = m01/MR_total;
+
+%disp('Burn Out Mass of Upper Stage / Dry Mass (kg):')
+%disp(mb1)
+
+% To calculate the mass of fuel for the upper stage
+mf_up = m01-mb1;
+%disp('The mass of fuel for upper stage in Kg')
+%disp(mf_up)
 
 
 %---------------Lower Stages Analysis--------------%
 % Compute optimal delta-V & mass distribution across 3 stages
 % Pavan have you done any of this part?
+% Below are the inputs for the function launch_vehicle_optimal_solution
+x0 = [1400, 2600, 4000, -1e-3]; % Intial guess for Velocities of three stages and alpha value
+Isp1 = 365; % Stage 1 Isp. Changes based on the propellant used
+Isp2 = 365; % Stage 1 Isp. Changes based on the propellant used
+Isp3 = 460; % Stage 1 Isp. Changes based on the propellant used
+m_upper = 95820; % The wet mass of the upper stage.
+
+% The function launch_vehicle_optimal_solution will return optimal delatV values for each stage, optimal alpha, structural coefficients, payload ratios, mass ratios, 
+% wet mass of each stage, structural mass of each stage and propellant mass of each stgae.
+[x_solution,eps1,eps2,eps3,lambda1,lambda2, lambda3, R1, R2, R3, m_1, m_2, m_3, m_s1, m_s2, m_s3, m_p1, m_p2, m_p3, delta_ui, alpha] =...
+launch_vehicle_optimal_solution(x0, Isp1, Isp2, Isp3, m_upper);
 % Number of engines per stages are defined earlier, with the following variable name.
 % num_eng_stg1
 % num_eng_stg2
