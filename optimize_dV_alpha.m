@@ -3,7 +3,7 @@ function [delta_ui, alpha, R1, R2, R3, lambda1, lambda2, lambda3, m_01, m_02, m_
     
     % Initial guesses for the variables
     % x0 = [2666, 2666, 2667, -1e-3]; % Initial guess
-    x0 = [dV_total/3, dV_total/3, dV_total/3, -1e-3];;
+    x0 = [dV_total/3, dV_total/3, dV_total/3, -1e-3];
     
     % Solve the optimization problem
     x = fsolve(fun, x0); % solve the optimization problem

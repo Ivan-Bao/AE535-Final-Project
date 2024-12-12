@@ -1,6 +1,13 @@
 function mass = calcEngineMass(in, rho_wall, R_c, L_c, sigma_h, nlines, thi, oflag)
-    yt = in_At / (2 * in.throat_width);
-    [xw,yw,xcl,Mcl] = MinLenNozDes(yt,in.Me,in.gamma,nlines,thi,oflag,pflag);
+    yt = in.At / (2 * in.throat_width);
+    disp(yt)
+    disp(in.Me)
+    disp(in.gamma)
+    disp(nlines)
+    disp(thi)
+    disp(oflag)
+    [xw,yw,xcl,Mcl] = MinLenNozDes(yt, in.Me,in.gamma,nlines,thi,oflag);
+    % [xw,yw,xcl,Mcl] = MinLenNozDes(0.3536, 2.4475, 1.1443, 20, 0.1, 1)
     p_c = in.P0;
 
     wall_thickness = p_c * R_c / sigma_h;

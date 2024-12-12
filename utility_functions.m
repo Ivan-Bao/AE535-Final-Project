@@ -16,7 +16,7 @@ classdef utility_functions
             if strcmp(fuel_type, 'hydrogen')
                 epsilon = 0.07014715 + 0.1648617* exp ( -0.8647945*(0.001*delta_v));
             elseif strcmp(fuel_type, 'hydrocarbon')
-                epsilon = 0.0305466 + 0.06892734* exp ( -0.8586846*(0.001*delta_v))
+                epsilon = 0.0305466 + 0.06892734* exp ( -0.8586846*(0.001*delta_v));
 
             else
                 error('Invalid fuel type. Choose ''hydrogen'' or ''hydrocarbon''');

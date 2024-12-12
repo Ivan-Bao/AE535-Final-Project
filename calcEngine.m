@@ -11,9 +11,9 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp]=calcEngine(in, optimal_mode) % chamber 
     %-------------Analysis------------%
 
     if strcmp(optimal_mode, 'sea level')
-        Pe = 101325; % Sea level ambient pressure
+        Pe = 875000; % Sea level exit pressure
     elseif strcmp(optimal_mode, 'vacuum')
-        Pe = 1000; % vacuum ambient pressure, since it's impossible to really expand it to zero pressure, we take 1000 pa as required exit pressure      
+        Pe = 233000; % vacuum exit pressure, since it's impossible to really expand it to zero pressure, we take 1000 pa as required exit pressure      
     else
         fprintf('error');
     end
@@ -23,8 +23,8 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp]=calcEngine(in, optimal_mode) % chamber 
     ue = velocity(Me, gamma, R_specific, Te); % Exit velocity
     Ae_At = A_At_from_Mach(Me, gamma); % Nozzle exit-throat area ratio
 
-    rho0 = p0/(R_specific*T0); % Stagnation density
-    m_dot = (density_ratio(1, gamma) * rho0) * At * np.sqrt(gamma * R_spec * T0 * temperature_ratio(1, gamma)); % Calculate mass flow rate at using throat conditions
+    rho0 = P0/(R_specific*T0); % Stagnation density
+    m_dot = (density_ratio(1, gamma) * rho0) * At * sqrt(gamma * R_specific * T0 * temperature_ratio(1, gamma)); % Calculate mass flow rate at using throat conditions
     if strcmp(optimal_mode, 'sea level')
         Pa = 101325; % Sea level ambient pressure
     elseif strcmp(optimal_mode, 'vacuum')
