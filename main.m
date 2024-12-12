@@ -6,13 +6,6 @@ rho_wall = 6 * 100^3 * 1e-3; % kg/m3 Chamber material density
 
 
 
-%---------------------CEA Data----------------------%
-
-
-
-
-
-
 %---------------------Parameters--------------------%
 % --- Upper stage
 delta_v_up_stg = 1000 * [0.2, 2.46, 1.48, 0.68, 0.14, 0.68, 0.68, 0.14, 3.14];
@@ -30,13 +23,13 @@ num_eng_stg2 = 1;
 num_eng_stg3 = 1;
 
 % --- Hydrogen Engine
-HY_Chamber_Pres = 350 * 1e5; % Pa, chamber pressure
+HY_Chamber_Pres = 150 * 1e5; % Pa, chamber pressure
 HY_throat_area = 0.1; % m2, throat area
 R_c_HY = 0.2; % m, engine chamber radius
 L_c_HY = 0.5; % m, engine chamber axial length
 
 % --- Hydrocarbon(LCH4) Engine
-HC_Chamber_Pres = 350 * 1e5; % Pa
+HC_Chamber_Pres = 150 * 1e5; % Pa
 HC_throat_area = 0.1; % m2, throat area
 R_c_HC = 0.2; % m, engine chamber radius
 L_c_HC = 0.5; % m, engine chamber axial length
@@ -57,7 +50,7 @@ in.At = HY_throat_area; % Throat area of hydrogen engine
 in.throat_width = sqrt(HY_throat_area); % Assume square nozzle
 [Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY]=calcEngine(in, 'vacuum'); % Might want some IF statements here to make sure the sea level and vacuum ones match the stage
 in.Me = Me_HY
-m_engine_HY = calcEngineMass(in, rho_wall, R_c_HY, L_c_HY, sigma_h, 11, 0.1, 1);
+m_engine_HY = calcEngineMass(in, rho_wall, R_c_HY, L_c_HY, sigma_h, 50, 0.1, 1);
 
 
 % --- Engine type 2 (Hydrocarbon - LCH4, lower 3 stages)
@@ -70,7 +63,7 @@ in.At = HC_throat_area; % Throat area of hydrogen engine
 in.throat_width = sqrt(HC_throat_area); % Assume square nozzle
 [Me_HC, Te_HC, Pe_HC, ue_HC, Ae_At_HC, F_HC, Isp_HC]=calcEngine(in, 'sea level');
 in.Me = Me_HC
-m_engine_HC = calcEngineMass(in, rho_wall, R_c_HC, L_c_HC, sigma_h, 11, 0.1, 1);
+m_engine_HC = calcEngineMass(in, rho_wall, R_c_HC, L_c_HC, sigma_h, 50, 0.1, 1);
 
 
 %---------------Upper Stage Analysis---------------%
@@ -82,7 +75,6 @@ m_upper = 100000; % kg, Placeholder, by the end of upper stage analysis we shoul
 %---------------Lower Stages Analysis--------------%
 % Compute optimal delta-V & mass distribution across 3 stages
 % Pavan have you done any of this part?
-[delta_ui, alpha, R1, R2, R3, lambda1, lambda2, lambda3, m_01, m_02, m_03] = optimize_dV_alpha(Isp_HC, fuel_type_stg1, Isp_HC, fuel_type_stg2, Isp_HC, fuel_type_stg3, delta_v_btm_three_stage, m_upper);
 % Number of engines per stages are defined earlier, with the following variable name.
 % num_eng_stg1
 % num_eng_stg2
