@@ -1,3 +1,5 @@
+clear; clc; close all;
+
 %---------------------Constants----------------------%
 g0 = 9.81;  % Gravity constant, m/s^2
 R = 8.3145;  % Universal gas constant in J/(mol*K)
@@ -17,6 +19,7 @@ num_eng_up_stg = 1; % For now assume upper stage has only one engine
 fuel_type_stg1 = 'hydrocarbon';
 fuel_type_stg2 = 'hydrocarbon';
 fuel_type_stg3 = 'hydrocarbon';
+fuel_type_upper = 'hydrogen';
 
 num_eng_stg1 = 5; % Number of engines each stage
 num_eng_stg2 = 1;
@@ -49,7 +52,7 @@ in.P0 = HY_Chamber_Pres; % Pa, hydrogen engine chamber pressure
 in.At = HY_throat_area; % Throat area of hydrogen engine
 in.throat_width = sqrt(HY_throat_area); % Assume square nozzle
 [Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY]=calcEngine(in, 'vacuum'); % Might want some IF statements here to make sure the sea level and vacuum ones match the stage
-in.Me = Me_HY
+in.Me = Me_HY;
 m_engine_HY = calcEngineMass(in, rho_wall, R_c_HY, L_c_HY, sigma_h, 50, 0.1, 1);
 
 
@@ -62,14 +65,14 @@ in.P0 = HC_Chamber_Pres; % Pa, hydrogen engine chamber pressure
 in.At = HC_throat_area; % Throat area of hydrogen engine
 in.throat_width = sqrt(HC_throat_area); % Assume square nozzle
 [Me_HC, Te_HC, Pe_HC, ue_HC, Ae_At_HC, F_HC, Isp_HC]=calcEngine(in, 'sea level');
-in.Me = Me_HC
+in.Me = Me_HC;
 m_engine_HC = calcEngineMass(in, rho_wall, R_c_HC, L_c_HC, sigma_h, 50, 0.1, 1);
 
 
 %---------------Upper Stage Analysis---------------%
 % Pavan already done the hand calc (or code?) on Overleaf doc, just need to copy paste the algorithm over here
 % Upper Stage Design for Mission from LEO to Moon and Back
-clear; clc;
+% clear; clc;
 % Given Data
 Isp = 450; % specific impulse of the upper stage in seconds (LOX/LH2)
 g0 = 9.81; % gravitational constant in m/s^2
@@ -90,14 +93,14 @@ disp(MR_total);
 
 
 % Calculate structural coefficients epsilon for each stage
-        if (Isp == 450)  % hydrogen
-            eps = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*delta_Vup));
-        else  % hydrocarbon
-            eps = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*delta_Vup));
-        end
+if (Isp == 450)  % hydrogen
+    eps = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*delta_Vup));
+else  % hydrocarbon
+    eps = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*delta_Vup));
+end
 
-        disp('The structural coefficeint of upper stage :')
-        disp(eps)
+disp('The structural coefficeint of upper stage :')
+disp(eps)
 
 % Calculating Payload Ratio
 PL_ratio = (1-eps.* MR_total)./(MR_total - 1);
@@ -151,6 +154,104 @@ launch_vehicle_optimal_solution(x0, Isp1, Isp2, Isp3, m_upper);
 % Perhaps we can use F9 or Star ship's TWR as reference.
 
 
+% ----------------- Propellant Volume Calculations ------------------
+% Densities of propellants (kg/m^3) from Sutton
+reference_gravity = 10^3;
+
+density_CH4 = 0.424 * reference_gravity;   % Liquid methane (CH4) [kg/m^3]
+density_H2 = 0.071 * reference_gravity;   % Liquid hydrogen (H2)
+density_O2 = 1.14 * reference_gravity;   % Liquid oxygen (LOX)
+
+% Oxidizer-to-Fuel ratios (O/F)
+OF_ratio_CH4 = 4.0;  % Typical O/F ratio for CH4
+OF_ratio_H2 = 6.0;   % Typical O/F ratio for H2
+OF_ratio_RP1 = 3;
+
+% Stage 1 Propellant Volume
+if strcmp(fuel_type_stg1, 'hydrocarbon')
+    m_fuel1 = m_p1 / (1 + OF_ratio_CH4);
+    m_oxidizer1 = m_p1 - m_fuel1;
+    V_fuel1 = m_fuel1 / density_CH4;     % Fuel volume
+    V_oxidizer1 = m_oxidizer1 / density_O2; % Oxidizer volume
+    V_propellant1 = V_fuel1 + V_oxidizer1; % Total propellant volume
+else % Hydrogen
+    m_fuel1 = m_p1 / (1 + OF_ratio_H2);
+    m_oxidizer1 = m_p1 - m_fuel1;
+    V_fuel1 = m_fuel1 / density_H2;      % Fuel volume
+    V_oxidizer1 = m_oxidizer1 / density_O2; % Oxidizer volume
+    V_propellant1 = V_fuel1 + V_oxidizer1; % Total propellant volume
+end
+
+% Stage 2 Propellant Volume
+if strcmp(fuel_type_stg2, 'hydrocarbon')
+    m_fuel2 = m_p2 / (1 + OF_ratio_CH4);
+    m_oxidizer2 = m_p2 - m_fuel2;
+    V_fuel2 = m_fuel2 / density_CH4;
+    V_oxidizer2 = m_oxidizer2 / density_O2;
+    V_propellant2 = V_fuel2 + V_oxidizer2;
+else % Hydrogen
+    m_fuel2 = m_p2 / (1 + OF_ratio_H2);
+    m_oxidizer2 = m_p2 - m_fuel2;
+    V_fuel2 = m_fuel2 / density_H2;
+    V_oxidizer2 = m_oxidizer2 / density_O2;
+    V_propellant2 = V_fuel2 + V_oxidizer2;
+end
+
+% Stage 3 Propellant Volume
+if strcmp(fuel_type_stg3, 'hydrocarbon')
+    m_fuel3 = m_p3 / (1 + OF_ratio_CH4);
+    m_oxidizer3 = m_p3 - m_fuel3;
+    V_fuel3 = m_fuel3 / density_CH4;
+    V_oxidizer3 = m_oxidizer3 / density_O2;
+    V_propellant3 = V_fuel3 + V_oxidizer3;
+else % Hydrogen
+    m_fuel3 = m_p3 / (1 + OF_ratio_H2);
+    m_oxidizer3 = m_p3 - m_fuel3;
+    V_fuel3 = m_fuel3 / density_H2;
+    V_oxidizer3 = m_oxidizer3 / density_O2;
+    V_propellant3 = V_fuel3 + V_oxidizer3;
+end
+
+% Upper Stage Propellant Volume
+m_p_upper = 84.4e3;
+if strcmp(fuel_type_upper, 'hydrocarbon')
+    m_fuel_upper = m_p_upper / (1 + OF_ratio_CH4);
+    m_oxidizer_upper = m_p_upper - m_fuel_upper;
+    V_fuel_upper = m_fuel_upper / density_CH4;
+    V_oxidizer_upper = m_oxidizer_upper / density_O2;
+    V_propellant_upper = V_fuel_upper + V_oxidizer_upper;
+else % Hydrogen
+    m_fuel_upper = m_p_upper / (1 + OF_ratio_H2);
+    m_oxidizer_upper = m_p_upper - m_fuel_upper;
+    V_fuel_upper = m_fuel_upper / density_H2;
+    V_oxidizer_upper = m_oxidizer_upper / density_O2;
+    V_propellant_upper = V_fuel_upper + V_oxidizer_upper;
+end
+
+% Display results
+disp(" ")
+disp('Stage 1 Propellant Volumes:');
+disp(['Fuel Volume (m^3): ', num2str(V_fuel1)]);
+disp(['Oxidizer Volume (m^3): ', num2str(V_oxidizer1)]);
+disp(['Total Volume (m^3): ', num2str(V_propellant1)]);
+disp(" ")
+
+disp('Stage 2 Propellant Volumes:');
+disp(['Fuel Volume (m^3): ', num2str(V_fuel2)]);
+disp(['Oxidizer Volume (m^3): ', num2str(V_oxidizer2)]);
+disp(['Total Volume (m^3): ', num2str(V_propellant2)]);
+disp(" ")
+
+disp('Stage 3 Propellant Volumes:');
+disp(['Fuel Volume (m^3): ', num2str(V_fuel3)]);
+disp(['Oxidizer Volume (m^3): ', num2str(V_oxidizer3)]);
+disp(['Total Volume (m^3): ', num2str(V_propellant3)]);
+disp(" ")
+
+disp('Upper Stage Propellant Volumes:');
+disp(['Fuel Volume (m^3): ', num2str(V_fuel_upper)]);
+disp(['Oxidizer Volume (m^3): ', num2str(V_oxidizer_upper)]);
+disp(['Total Volume (m^3): ', num2str(V_propellant_upper)]);
 
 
 % --------------------Plotting---------------------%
