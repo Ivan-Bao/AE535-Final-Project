@@ -1,4 +1,4 @@
-function [Me, Te, Pe, ue, Ae_At, F, Isp]=calcEngine(in, optimal_mode) % chamber pressure & temperature are specified as input parameters. These are constrained by current technology limits.
+function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh]=calcEngine(in, optimal_mode, trunc_length, scale) % chamber pressure & temperature are specified as input parameters. These are constrained by current technology limits.
     % We assume the engine is optimized at either sea level and vacuum, and ignore off-point of operation situations like during
     % the ascend phase of first stage, transition between sea level and vacuum while first stage is only optimize for sea level. 
     % Assuming everything downstream of combustion chamber 
@@ -20,6 +20,39 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp]=calcEngine(in, optimal_mode) % chamber 
 
 
     Me = Mach_from_expansion(Pe, P0, gamma); % Exit Mach number
+    % Calculate Full Nozzle and then truncate it
+    trunc_length = trunc_length * scale; % Bring it to the same scale
+    [xw,yw,xcl,Mcl,Prat, X, Y] = MinLenNozDes(scale, Me,in.gamma,80,0.1, 0);
+    Xmesh = X;
+    % Find the x index where elements exceed the truncation length for the last time
+    
+    for i = 1:length(xw)
+        if xw(i) >= xw(end) - trunc_length
+            trunc_index = i;
+            break
+        end
+    end
+    for i = 1:length(X(1, :))
+        if X(1, i) >= X(1, end) - trunc_length
+            mesh_index = i;
+            break
+        end
+    end
+
+    % Check if truncation_index is empty, which can occur if all values exceed truncation_length
+    Pe = mean(P0*Prat(:, mesh_index),'omitnan');
+    Me = Mach_from_expansion(Pe, P0, gamma); % Now we compute the exit mach number given the truncated exit pressure
+    clf
+    fig = figure();
+    pcolor(X(:, 1:mesh_index),Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
+    hold on
+    pcolor(X(:, 1:mesh_index),-Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
+    plot(xw(1:trunc_index),yw(1:trunc_index),'k-','LineWidth',2) 
+    plot(xw(1:trunc_index),-yw(1:trunc_index),'k-','LineWidth',2)
+    shading interp
+    formatplot('$p / p_o$')
+    uiwait(fig)
+
     Te_T0 = temperature_ratio(Me, gamma); % Exit/Chamber pressure ratio
     Te = Te_T0 * T0; % Exit pressure
     ue = velocity(Me, gamma, R_specific, Te); % Exit velocity
@@ -88,3 +121,23 @@ function A_At = A_At_from_Mach(M, gamma)
     term2 = ((2 / (gamma + 1)) * (1 + (gamma - 1) / 2 * M^2)) ^ ((gamma + 1) / (2 * (gamma - 1)));
     A_At = term1 * term2;  % Area of shock over area of throat
 end
+
+function formatplot(clab)
+    xlabel('Distance from throat, mm', 'interpreter', 'latex', 'fontsize',24,'fontname','times')
+    ylabel('Distance from axis, mm',   'interpreter', 'latex', 'fontsize',24,'fontname','times')
+    
+    set(gca,'fontsize',24,'fontname','times')
+    set(gca,'linewidth',1.5,'box','off','ticklength',[.01 0])
+    set(gca,'tickdir','out')
+    
+    axis equal
+    
+    if ~isempty(clab)
+        h = colorbar;
+        ylabel(h, clab,'fontsize',24,'fontname','times','interpreter', 'latex')
+    end
+    
+    set(gcf,'position',[100 100 900 600],'color',[1 1 1],'paperPositionMode','auto')
+    set(gca, 'position', [0.06,0.12,0.88, 0.85])
+        
+    end

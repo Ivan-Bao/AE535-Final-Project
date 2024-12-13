@@ -1,4 +1,4 @@
-function [xw,yw,xcl,Mcl] = MinLenNozDes(yt,Me,gam,nlines,thi,oflag,pflag)
+function [xw,yw,xcl,Mcl,Prat, X, Y] = MinLenNozDes(yt,Me,gam,nlines,thi,oflag,pflag)
 %
 %
 % Function which computes the contour of a minimum length diverging nozzle 
@@ -274,6 +274,23 @@ if oflag == 1
     formatplot('$p / p_o$')
     if pflag == 1; print(gcf, '-dpng', 'nozzle_minlength_pressure', '-r300'); end
     
+else
+    [X,Y] = meshgrid(0:0.5:x(end),0:0.5:y(end)); 
+    Mq = griddata(x,y,M,X,Y);
+    [xlen,ylen] = size(Mq);
+    for i = 1:xlen
+        numcheck = 0; 
+        for j = 1:ylen
+            if isnan(Mq(i,j)) == 0 
+                numcheck = 1;
+            end
+            if (numcheck == 1)&&(isnan(Mq(i,j)) == 1)
+                Mq(i,j) = Mq(i,j-1);
+            end
+        end
+    end
+    Trat = (1 + (gam - 1)/2*Mq.^2).^(-1); 
+    Prat = Trat.^(gam/(gam-1));
 end
 
 end
