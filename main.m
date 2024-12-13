@@ -30,7 +30,7 @@ HY_Chamber_Pres = 160 * 1e5; % Pa, chamber pressure
 HY_throat_area = 0.1; % m2, throat area
 R_c_HY = 0.2; % m, engine chamber radius
 L_c_HY = 0.5; % m, engine chamber axial length
-trunc_length_HY = 15; % m, the length we truncate off the engine nozzle
+trunc_length_HY = 25; % m, the length we truncate off the engine nozzle
 
 % --- Hydrocarbon(LCH4) Engine
 HC_Chamber_Pres = 160 * 1e5; % Pa
@@ -48,10 +48,9 @@ trunc_length_RP = 0.2; % m, the length we truncate off the engine nozzle
 
 
 %-----------------Engine Analysis -----------------% 
-% Using data from CEA, get things like R_specific, Chamber Temperature, Gamma (We can designate a pressure, say 350 bars) 
 % Or we can adjust the chamber pressure until engine mass is reasonable
 % --- Engine type 1 (Hydrogen, upper stage)
-in.gamma = 1.399; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
+in.gamma = 1.1459; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
 in.T0 = 3645.7; % K, data from CEA
 in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
 

@@ -13,7 +13,7 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh]=calcE
     if strcmp(optimal_mode, 'sea level')
         Pe = 875000; % Sea level exit pressure
     elseif strcmp(optimal_mode, 'vacuum')
-        Pe = 233000; % vacuum exit pressure, since it's impossible to really expand it to zero pressure, we take 1000 pa as required exit pressure      
+        Pe = 100000; % vacuum exit pressure, since it's impossible to really expand it to zero pressure, we take 1000 pa as required exit pressure      
     else
         fprintf('error');
     end
@@ -42,6 +42,8 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh]=calcE
     % Check if truncation_index is empty, which can occur if all values exceed truncation_length
     Pe = mean(P0*Prat(:, mesh_index),'omitnan');
     Me = Mach_from_expansion(Pe, P0, gamma); % Now we compute the exit mach number given the truncated exit pressure
+
+
     clf
     fig = figure();
     pcolor(X(:, 1:mesh_index),Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
