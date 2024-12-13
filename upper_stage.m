@@ -54,7 +54,7 @@ disp(mb1)
 % To calculate the mass of propellant for the upper stage
 mp_up = m01-mb1;
 disp('The mass of fuel for upper stage in Kg')
-disp(mf_up)
+disp(mp_up)
 
 % To calculate the strctural mass of the upper stage
 ms_up = mb1-PL_mass;
