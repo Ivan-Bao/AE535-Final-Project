@@ -51,8 +51,8 @@ mb1 = m01/MR_total;
 disp('Burn Out Mass of Upper Stage / Dry Mass (kg):')
 disp(mb1)
 
-% To calculate the mass of fuel for the upper stage
-mf_up = m01-mb1;
+% To calculate the mass of propellant for the upper stage
+mp_up = m01-mb1;
 disp('The mass of fuel for upper stage in Kg')
 disp(mf_up)
 
