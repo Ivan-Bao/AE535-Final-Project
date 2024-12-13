@@ -159,21 +159,23 @@ PL_mass = 5000; %kg
 % To calculate Intial Mass of the upper stage
 PL_fraction = PL_ratio/(PL_ratio+1);
 m01 = PL_mass/PL_fraction;
-
 %disp('Intial Mass of upper Stage / Wet Mass of upper stage (kg):')
 %disp(m01)
 
 % To calculate Burn Out Mass or Dry Mass
 mb1 = m01/MR_total;
-
 %disp('Burn Out Mass of Upper Stage / Dry Mass (kg):')
 %disp(mb1)
 
-% To calculate the mass of fuel for the upper stage
-mf_up = m01-mb1;
-%disp('The mass of fuel for upper stage in Kg')
+% To calculate the mass of propellant for the upper stage
+mp_up = m01-mb1;
+%disp('The mass of propellant for upper stage in Kg')
 %disp(mf_up)
 
+% To calculate the structural mass of the upper stage
+ms_up = mb1-PL_mass;
+%disp('The structural mass of the upper stage in Kg:')
+%disp(ms_up)
 
 %---------------Lower Stages Analysis--------------%
 % Compute optimal delta-V & mass distribution across 3 stages
