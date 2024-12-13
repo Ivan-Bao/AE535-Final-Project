@@ -58,10 +58,6 @@ trunc_length_HYSea = 3; % m, the length we truncate off the engine nozzle
 % Or we can adjust the chamber pressure until engine mass is reasonable
 % --- Engine type 1 (Hydrogen, upper stage)
 
-in.gamma = 1.1459; % data from CEA
-in.T0 = 3645.7; % K, data from CEA
-in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
-
 in.gamma = 1.1459; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
 in.T0 = 3574.9; % K, data from CEA
 in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
@@ -78,10 +74,6 @@ m_engine_HY = calcEngineMass(in, trunc_index, rho_wall, R_c_HY, L_c_HY, sigma_h,
 
 % --- Engine type 2 (Hydrocarbon - LCH4, lower 3 stages)
 
-in.gamma = 1.1304; % data from CEA
-in.T0 = 3639.6; % K, data from CEA
-in.R_specific = 1000*R/24.315; % J K-1 kg-1, specific gas constant of exhaust
-
 in.gamma = 1.1307; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
 in.T0 = 3676.7; % K, data from CEA
 in.R_specific = 1000*R/23.36; % J K-1 kg-1, specific gas constant of exhaust
@@ -96,9 +88,6 @@ m_engine_HC = calcEngineMass(in, trunc_index, rho_wall, R_c_HC, L_c_HC, sigma_h,
 
 % --- Engine type 3 (RP1, not used, for reference)
 
-in.gamma = 1.1327; % data from CEA
-in.T0 = 3810.6; % K, data from CEA
-in.R_specific = 1000*R/26.266; % J K-1 kg-1, specific gas constant of exhaust
 
 in.gamma = 1.1354; % data from CEA <----------------------------------------------------------------------------change these three to fit RP1, chamber pressure also at 150 bar
 in.T0 = 3834.9; % K, data from CEA
@@ -114,8 +103,8 @@ m_engine_RP = calcEngineMass(in, trunc_index, rho_wall, R_c_RP, L_c_RP, sigma_h,
 
 % --- Engine type 4 (Hydrgen, sea level optimized)
 in.gamma = 1.1459; % data from CEA
-in.T0 = 3645.7; % K, data from CEA
-in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
+in.T0 = 3574.9; % K, data from CEA
+in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
 
 in.P0 = HYSea_Chamber_Pres; % Pa, Sea level hydrogen engine chamber pressure
 in.At = HYSea_throat_area; % Throat area of sea level hydrogen engine
