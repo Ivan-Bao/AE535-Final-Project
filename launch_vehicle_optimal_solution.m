@@ -82,7 +82,7 @@ end
 
 function eps = calc_eps(Isp, delta_u)
     % Calculate epsilon based on Isp
-    if (Isp == 460) % hydrogen
+    if (Isp == 345) % hydrogen
         eps = 0.07060945 + 0.1610852 * exp(-0.849934 * (0.001 * delta_u));
     else % hydrocarbon
         eps = 0.0305466 + 0.06892734 * exp(-0.8586846 * (0.001 * delta_u));
