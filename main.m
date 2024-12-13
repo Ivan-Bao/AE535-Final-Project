@@ -94,7 +94,7 @@ m_engine_RP = calcEngineMass(in, trunc_index, rho_wall, R_c_RP, L_c_RP, sigma_h,
 % Upper Stage Design for Mission from LEO to Moon and Back
 % clear; clc;
 % Given Data
-Isp = 450; % specific impulse of the upper stage in seconds (LOX/LH2)
+Isp = Isp_HY; % specific impulse of the upper stage in seconds (LOX/LH2)
 g0 = 9.81; % gravitational constant in m/s^2
 
 % Delta-V values for each maneuver in km/s (converted to m/s)
@@ -113,7 +113,7 @@ disp(MR_total);
 
 
 % Calculate structural coefficients epsilon for each stage
-if (Isp == 450)  % hydrogen
+if (Isp > 320)  % hydrogen
     eps = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*delta_Vup));
 else  % hydrocarbon
     eps = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*delta_Vup));
