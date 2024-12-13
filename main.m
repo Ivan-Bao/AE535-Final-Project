@@ -26,21 +26,21 @@ num_eng_stg2 = 1;
 num_eng_stg3 = 1;
 
 % --- Hydrogen Engine
-HY_Chamber_Pres = 150 * 1e5; % Pa, chamber pressure
+HY_Chamber_Pres = 160 * 1e5; % Pa, chamber pressure
 HY_throat_area = 0.1; % m2, throat area
 R_c_HY = 0.2; % m, engine chamber radius
 L_c_HY = 0.5; % m, engine chamber axial length
 trunc_length_HY = 15; % m, the length we truncate off the engine nozzle
 
 % --- Hydrocarbon(LCH4) Engine
-HC_Chamber_Pres = 150 * 1e5; % Pa
+HC_Chamber_Pres = 160 * 1e5; % Pa
 HC_throat_area = 0.1; % m2, throat area
 R_c_HC = 0.2; % m, engine chamber radius
 L_c_HC = 0.5; % m, engine chamber axial length
 trunc_length_HC = 0.2; % m, the length we truncate off the engine nozzle
 
 % --- RP1 Engine
-RP_Chamber_Pres = 150 * 1e5; % Pa
+RP_Chamber_Pres = 160 * 1e5; % Pa
 RP_throat_area = 0.1; % m2, throat area
 R_c_RP = 0.2; % m, engine chamber radius
 L_c_RP = 0.5; % m, engine chamber axial length
@@ -51,9 +51,9 @@ trunc_length_RP = 0.2; % m, the length we truncate off the engine nozzle
 % Using data from CEA, get things like R_specific, Chamber Temperature, Gamma (We can designate a pressure, say 350 bars) 
 % Or we can adjust the chamber pressure until engine mass is reasonable
 % --- Engine type 1 (Hydrogen, upper stage)
-in.gamma = 1.1443; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
-in.T0 = 3731.9; % K, data from CEA
-in.R_specific = 1000*R/14.480; % J K-1 kg-1, specific gas constant of exhaust
+in.gamma = 1.399; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
+in.T0 = 3645.7; % K, data from CEA
+in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
 
 in.P0 = HY_Chamber_Pres; % Pa, hydrogen engine chamber pressure
 in.At = HY_throat_area; % Throat area of hydrogen engine
@@ -65,9 +65,9 @@ m_engine_HY = calcEngineMass(in, trunc_index, rho_wall, R_c_HY, L_c_HY, sigma_h,
 % disp([Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY])
 
 % --- Engine type 2 (Hydrocarbon - LCH4, lower 3 stages)
-in.gamma = 1.1333; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
-in.T0 = 3739.3; % K, data from CEA
-in.R_specific = 1000*R/24.560; % J K-1 kg-1, specific gas constant of exhaust
+in.gamma = 1.1304; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
+in.T0 = 3639.6; % K, data from CEA
+in.R_specific = 1000*R/24.315; % J K-1 kg-1, specific gas constant of exhaust
 
 in.P0 = HC_Chamber_Pres; % Pa, methane engine chamber pressure
 in.At = HC_throat_area; % Throat area of methane engine
@@ -77,9 +77,9 @@ in.Me = Me_HC;
 m_engine_HC = calcEngineMass(in, trunc_index, rho_wall, R_c_HC, L_c_HC, sigma_h, xw, yw, scale, Prat, Xmesh);
 
 % --- Engine type 3 (RP1, not used, for reference)
-in.gamma = 1.1333; % data from CEA <----------------------------------------------------------------------------change these three to fit RP1, chamber pressure also at 150 bar
-in.T0 = 3739.3; % K, data from CEA
-in.R_specific = 1000*R/24.560; % J K-1 kg-1, specific gas constant of exhaust
+in.gamma = 1.1327; % data from CEA <----------------------------------------------------------------------------change these three to fit RP1, chamber pressure also at 150 bar
+in.T0 = 3810.6; % K, data from CEA
+in.R_specific = 1000*R/26.266; % J K-1 kg-1, specific gas constant of exhaust
 
 in.P0 = RP_Chamber_Pres; % Pa, RP1 engine chamber pressure
 in.At = RP_throat_area; % Throat area of RP1 engine
