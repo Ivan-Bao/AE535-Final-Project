@@ -181,11 +181,11 @@ ms_up = mb1-PL_mass;
 % Compute optimal delta-V & mass distribution across 3 stages
 % Pavan have you done any of this part?
 % Below are the inputs for the function launch_vehicle_optimal_solution
-x0 = [1400, 2600, 4000, -1e-3]; % Intial guess for Velocities of three stages and alpha value
+x0 = [2667, 2667, 2667, -1e-3]; % Intial guess for Velocities of three stages and alpha value
 Isp1 = Isp_HC; % Stage 1 Isp. Changes based on the propellant used
 Isp2 = Isp_HC; % Stage 1 Isp. Changes based on the propellant used
 Isp3 = Isp_HC; % Stage 1 Isp. Changes based on the propellant used
-m_upper = 95820; % The wet mass of the upper stage.
+m_upper = 170950; % The wet mass of the upper stage.
 
 % The function launch_vehicle_optimal_solution will return optimal delatV values for each stage, optimal alpha, structural coefficients, payload ratios, mass ratios, 
 % wet mass of each stage, structural mass of each stage and propellant mass of each stgae.
@@ -260,7 +260,7 @@ else % Hydrogen
 end
 
 % Upper Stage Propellant Volume
-m_p_upper = 84.4e3;
+m_p_upper = 154.22e3;
 if strcmp(fuel_type_upper, 'hydrocarbon')
     m_fuel_upper = m_p_upper / (1 + OF_ratio_CH4);
     m_oxidizer_upper = m_p_upper - m_fuel_upper;
