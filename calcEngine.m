@@ -1,4 +1,4 @@
-function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m]=calcEngine(in, optimal_mode, trunc_length, scale) % chamber pressure & temperature are specified as input parameters. These are constrained by current technology limits.
+function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m ,noz_ex_rad_1m]=calcEngine(in, optimal_mode, trunc_length, scale) % chamber pressure & temperature are specified as input parameters. These are constrained by current technology limits.
     % We assume the engine is optimized at either sea level and vacuum, and ignore off-point of operation situations like during
     % the ascend phase of first stage, transition between sea level and vacuum while first stage is only optimize for sea level. 
     % Assuming everything downstream of combustion chamber 
@@ -72,7 +72,8 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh, noz_l
     F = m_dot * ue + (Pe - Pa) * Ae_At * At; % Calculate thrust of the nozzle flow
     Isp = F/(m_dot * 9.806);
     noz_len_1m = xcl(end)/scale; % Nozzle length if the throat is 1m in radius
-end
+    noz_ex_rad_1m = yw(end)/scale; % Nozzle exit radius  if the throat is 1m in radius
+end 
 
 
 function Ma = area_ratio_to_mach(A_At, gamma)
