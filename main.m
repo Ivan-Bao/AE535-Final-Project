@@ -58,10 +58,6 @@ trunc_length_HYSea = 3; % m, the length we truncate off the engine nozzle
 % Or we can adjust the chamber pressure until engine mass is reasonable
 % --- Engine type 1 (Hydrogen, upper stage)
 
-in.gamma = 1.1459; % data from CEA
-in.T0 = 3645.7; % K, data from CEA
-in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
-
 in.gamma = 1.1459; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
 in.T0 = 3574.9; % K, data from CEA
 in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
@@ -79,10 +75,6 @@ nozzle_len_HY = sqrt(HY_throat_area/pi) * noz_len_1m; % Nozzle length
 
 % --- Engine type 2 (Hydrocarbon - LCH4, lower 3 stages)
 
-in.gamma = 1.1304; % data from CEA
-in.T0 = 3639.6; % K, data from CEA
-in.R_specific = 1000*R/24.315; % J K-1 kg-1, specific gas constant of exhaust
-
 in.gamma = 1.1307; % data from CEA <----------------------------------------------------------------------------change these three with data at 150 bar chamber pressure
 in.T0 = 3676.7; % K, data from CEA
 in.R_specific = 1000*R/23.36; % J K-1 kg-1, specific gas constant of exhaust
@@ -98,9 +90,6 @@ nozzle_len_HC = sqrt(HC_throat_area/pi) * noz_len_1m; % Nozzle length
 
 % --- Engine type 3 (RP1, not used, for reference)
 
-in.gamma = 1.1327; % data from CEA
-in.T0 = 3810.6; % K, data from CEA
-in.R_specific = 1000*R/26.266; % J K-1 kg-1, specific gas constant of exhaust
 
 in.gamma = 1.1354; % data from CEA <----------------------------------------------------------------------------change these three to fit RP1, chamber pressure also at 150 bar
 in.T0 = 3834.9; % K, data from CEA
@@ -117,8 +106,8 @@ nozzle_len_RP = sqrt(RP_throat_area/pi) * noz_len_1m; % Nozzle length
 
 % --- Engine type 4 (Hydrgen, sea level optimized)
 in.gamma = 1.1459; % data from CEA
-in.T0 = 3645.7; % K, data from CEA
-in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
+in.T0 = 3574.9; % K, data from CEA
+in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
 
 in.P0 = HYSea_Chamber_Pres; % Pa, Sea level hydrogen engine chamber pressure
 in.At = HYSea_throat_area; % Throat area of sea level hydrogen engine
@@ -174,31 +163,33 @@ PL_mass = 5000; %kg
 % To calculate Intial Mass of the upper stage
 PL_fraction = PL_ratio/(PL_ratio+1);
 m01 = PL_mass/PL_fraction;
-
 %disp('Intial Mass of upper Stage / Wet Mass of upper stage (kg):')
 %disp(m01)
 
 % To calculate Burn Out Mass or Dry Mass
 mb1 = m01/MR_total;
-
 %disp('Burn Out Mass of Upper Stage / Dry Mass (kg):')
 %disp(mb1)
 
-% To calculate the mass of fuel for the upper stage
-mf_up = m01-mb1;
-%disp('The mass of fuel for upper stage in Kg')
+% To calculate the mass of propellant for the upper stage
+mp_up = m01-mb1;
+%disp('The mass of propellant for upper stage in Kg')
 %disp(mf_up)
 
+% To calculate the structural mass of the upper stage
+ms_up = mb1-PL_mass;
+%disp('The structural mass of the upper stage in Kg:')
+%disp(ms_up)
 
 %---------------Lower Stages Analysis--------------%
 % Compute optimal delta-V & mass distribution across 3 stages
 % Pavan have you done any of this part?
 % Below are the inputs for the function launch_vehicle_optimal_solution
-x0 = [1400, 2600, 4000, -1e-3]; % Intial guess for Velocities of three stages and alpha value
+x0 = [2667, 2667, 2667, -1e-3]; % Intial guess for Velocities of three stages and alpha value
 Isp1 = Isp_HC; % Stage 1 Isp. Changes based on the propellant used
 Isp2 = Isp_HC; % Stage 1 Isp. Changes based on the propellant used
 Isp3 = Isp_HC; % Stage 1 Isp. Changes based on the propellant used
-m_upper = 95820; % The wet mass of the upper stage.
+m_upper = 170950; % The wet mass of the upper stage.
 
 % The function launch_vehicle_optimal_solution will return optimal delatV values for each stage, optimal alpha, structural coefficients, payload ratios, mass ratios, 
 % wet mass of each stage, structural mass of each stage and propellant mass of each stgae.
@@ -273,7 +264,7 @@ else % Hydrogen
 end
 
 % Upper Stage Propellant Volume
-m_p_upper = 84.4e3;
+m_p_upper = 154.22e3;
 if strcmp(fuel_type_upper, 'hydrocarbon')
     m_fuel_upper = m_p_upper / (1 + OF_ratio_CH4);
     m_oxidizer_upper = m_p_upper - m_fuel_upper;

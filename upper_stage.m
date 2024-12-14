@@ -1,7 +1,7 @@
 % Upper Stage Design for Mission from LEO to Moon and Back
 clear; clc;
 % Given Data
-Isp = 450; % specific impulse of the upper stage in seconds (LOX/LH2) Need to change it
+Isp = 421; % specific impulse of the upper stage in seconds (LOX/LH2) Need to change it
 g0 = 9.81; % gravitational constant in m/s^2
 
 % Delta-V values for each maneuver in km/s (converted to m/s)
@@ -20,7 +20,7 @@ disp(MR_total);
 
 
 % Calculate structural coefficients epsilon for each stage
-        if (Isp == 450)  % hydrogen
+        if (Isp > 360)  % hydrogen
             eps = 0.07060945 + 0.1610852*exp(-0.849934*(0.001*delta_Vup));
         else  % hydrocarbon
             eps = 0.0305466 + 0.06892734*exp(-0.8586846*(0.001*delta_Vup));
@@ -51,7 +51,12 @@ mb1 = m01/MR_total;
 disp('Burn Out Mass of Upper Stage / Dry Mass (kg):')
 disp(mb1)
 
-% To calculate the mass of fuel for the upper stage
-mf_up = m01-mb1;
+% To calculate the mass of propellant for the upper stage
+mp_up = m01-mb1;
 disp('The mass of fuel for upper stage in Kg')
-disp(mf_up)
+disp(mp_up)
+
+% To calculate the strctural mass of the upper stage
+ms_up = mb1-PL_mass;
+disp('The structural mass of the upper stage in Kg:')
+disp(ms_up)
