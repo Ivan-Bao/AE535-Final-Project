@@ -34,21 +34,21 @@ trunc_length_HY = 20; % m, the length we truncate off the engine nozzle
 
 % --- Hydrocarbon(LCH4) Engine
 HC_Chamber_Pres = 160 * 1e5; % Pa
-HC_throat_area = 0.1; % m2, throat area
+HC_throat_area = 0.2; % m2, throat area
 R_c_HC = 0.2; % m, engine chamber radius
 L_c_HC = 0.5; % m, engine chamber axial length
 trunc_length_HC = 3; % m, the length we truncate off the engine nozzle
 
 % --- RP1 Engine
 RP_Chamber_Pres = 160 * 1e5; % Pa
-RP_throat_area = 0.1; % m2, throat area
+RP_throat_area = 0.2; % m2, throat area
 R_c_RP = 0.2; % m, engine chamber radius
 L_c_RP = 0.5; % m, engine chamber axial length
 trunc_length_RP = 3; % m, the length we truncate off the engine nozzle
 
 % --- Hydrogen Sea level Engine
 HYSea_Chamber_Pres = 160 * 1e5; % Pa, chamber pressure
-HYSea_throat_area = 0.1; % m2, throat area
+HYSea_throat_area = 0.2; % m2, throat area
 R_c_HYSea = 0.2; % m, engine chamber radius
 L_c_HYSea = 0.5; % m, engine chamber axial length
 trunc_length_HYSea = 3; % m, the length we truncate off the engine nozzle
@@ -70,9 +70,10 @@ in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = HY_Chamber_Pres; % Pa, hydrogen engine chamber pressure
 in.At = HY_throat_area; % Throat area of hydrogen engine
 in.throat_width = sqrt(HY_throat_area); % Assume square nozzle
-[Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY, xw, yw, trunc_index, Prat, Xmesh] = calcEngine(in, 'vacuum', trunc_length_HY, scale);
+[Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m] = calcEngine(in, 'vacuum', trunc_length_HY, scale);
 in.Me = Me_HY;
 m_engine_HY = calcEngineMass(in, trunc_index, rho_wall, R_c_HY, L_c_HY, sigma_h, xw, yw, scale, Prat, Xmesh);
+nozzle_len_HY = sqrt(HY_throat_area/pi) * noz_len_1m; % Nozzle length
 
 % disp([Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY])
 
@@ -90,9 +91,10 @@ in.R_specific = 1000*R/23.36; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = HC_Chamber_Pres; % Pa, methane engine chamber pressure
 in.At = HC_throat_area; % Throat area of methane engine
 in.throat_width = sqrt(HC_throat_area); % Assume square nozzle
-[Me_HC, Te_HC, Pe_HC, ue_HC, Ae_At_HC, F_HC, Isp_HC, xw, yw, trunc_index, Prat, Xmesh]=calcEngine(in, 'sea level', trunc_length_HC, scale);
+[Me_HC, Te_HC, Pe_HC, ue_HC, Ae_At_HC, F_HC, Isp_HC, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m]=calcEngine(in, 'sea level', trunc_length_HC, scale);
 in.Me = Me_HC;
 m_engine_HC = calcEngineMass(in, trunc_index, rho_wall, R_c_HC, L_c_HC, sigma_h, xw, yw, scale, Prat, Xmesh);
+nozzle_len_HC = sqrt(HC_throat_area/pi) * noz_len_1m; % Nozzle length
 
 % --- Engine type 3 (RP1, not used, for reference)
 
@@ -108,9 +110,10 @@ in.R_specific = 1000*R/25.035; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = RP_Chamber_Pres; % Pa, RP1 engine chamber pressure
 in.At = RP_throat_area; % Throat area of RP1 engine
 in.throat_width = sqrt(RP_throat_area); % Assume square nozzle
-[Me_RP, Te_RP, Pe_RP, ue_RP, Ae_At_RP, F_RP, Isp_RP, xw, yw, trunc_index, Prat, Xmesh]=calcEngine(in, 'sea level', trunc_length_RP, scale);
+[Me_RP, Te_RP, Pe_RP, ue_RP, Ae_At_RP, F_RP, Isp_RP, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m]=calcEngine(in, 'sea level', trunc_length_RP, scale);
 in.Me = Me_RP;
 m_engine_RP = calcEngineMass(in, trunc_index, rho_wall, R_c_RP, L_c_RP, sigma_h, xw, yw, scale, Prat, Xmesh);
+nozzle_len_RP = sqrt(RP_throat_area/pi) * noz_len_1m; % Nozzle length
 
 % --- Engine type 4 (Hydrgen, sea level optimized)
 in.gamma = 1.1459; % data from CEA
@@ -120,9 +123,10 @@ in.R_specific = 1000*R/14.354; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = HYSea_Chamber_Pres; % Pa, Sea level hydrogen engine chamber pressure
 in.At = HYSea_throat_area; % Throat area of sea level hydrogen engine
 in.throat_width = sqrt(HYSea_throat_area); % Assume square nozzle
-[Me_HYSea, Te_HYSea, Pe_HYSea, ue_HYSea, Ae_At_HYSea, F_HYSea, Isp_HYSea, xw, yw, trunc_index, Prat, Xmesh]=calcEngine(in, 'sea level', trunc_length_HYSea, scale);
+[Me_HYSea, Te_HYSea, Pe_HYSea, ue_HYSea, Ae_At_HYSea, F_HYSea, Isp_HYSea, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m]=calcEngine(in, 'sea level', trunc_length_HYSea, scale);
 in.Me = Me_HYSea;
 m_engine_HYSea = calcEngineMass(in, trunc_index, rho_wall, R_c_HYSea, L_c_HYSea, sigma_h, xw, yw, scale, Prat, Xmesh);
+nozzle_len_HYSea = sqrt(HYSea_throat_area/pi) * noz_len_1m; % Nozzle length
 
 
 %---------------Upper Stage Analysis---------------%

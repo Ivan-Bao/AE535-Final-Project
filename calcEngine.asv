@@ -71,7 +71,7 @@ function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh, noz_l
     end
     F = m_dot * ue + (Pe - Pa) * Ae_At * At; % Calculate thrust of the nozzle flow
     Isp = F/(m_dot * 9.806);
-    noz_len_1m = xcl(end)/scale; % Nozzle length if the throat is 1m in radius
+    noz_len_1m = xcl(end)/(2*scale); % Nozzle length if the throat is 1m in diameter
 end
 
 
