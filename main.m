@@ -29,14 +29,14 @@ num_eng_stg3 = 1;
 HY_Chamber_Pres = 160 * 1e5; % Pa, chamber pressure
 HY_throat_area = 0.1; % m2, throat area
 R_c_HY = 0.2; % m, engine chamber radius
-L_c_HY = 0.5; % m, engine chamber axial length
+L_c_HY = 0.73; % m, engine chamber axial length
 trunc_length_HY = 20; % m, the length we truncate off the engine nozzle
 
 % --- Hydrocarbon(LCH4) Engine
 HC_Chamber_Pres = 160 * 1e5; % Pa
 HC_throat_area = 0.2; % m2, throat area
 R_c_HC = 0.2; % m, engine chamber radius
-L_c_HC = 0.5; % m, engine chamber axial length
+L_c_HC = 1.04; % m, engine chamber axial length
 trunc_length_HC = 3; % m, the length we truncate off the engine nozzle
 
 % --- RP1 Engine
