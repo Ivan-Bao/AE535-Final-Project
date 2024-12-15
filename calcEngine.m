@@ -44,16 +44,16 @@ function [Me, Te, Pe, ue, Ae_At, m_dot, F, Isp, xw, yw, trunc_index, Prat, Xmesh
     Me = Mach_from_expansion(Pe, P0, gamma); % Now we compute the exit mach number given the truncated exit pressure
 
 
-    clf
-    fig = figure();
-    pcolor(X(:, 1:mesh_index),Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
-    hold on
-    pcolor(X(:, 1:mesh_index),-Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
-    plot(xw(1:trunc_index),yw(1:trunc_index),'k-','LineWidth',2) 
-    plot(xw(1:trunc_index),-yw(1:trunc_index),'k-','LineWidth',2)
-    shading interp
-    formatplot('$p / p_o$')
-    uiwait(fig)
+    % clf
+    % fig = figure();
+    % pcolor(X(:, 1:mesh_index),Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
+    % hold on
+    % pcolor(X(:, 1:mesh_index),-Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
+    % plot(xw(1:trunc_index),yw(1:trunc_index),'k-','LineWidth',2) 
+    % plot(xw(1:trunc_index),-yw(1:trunc_index),'k-','LineWidth',2)
+    % shading interp
+    % formatplot('$p / p_o$')
+    % uiwait(fig)
 
     Te_T0 = temperature_ratio(Me, gamma); % Exit/Chamber pressure ratio
     Te = Te_T0 * T0; % Exit pressure

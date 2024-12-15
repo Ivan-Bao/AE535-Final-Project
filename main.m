@@ -21,8 +21,8 @@ fuel_type_stg2 = 'hydrocarbon';
 fuel_type_stg3 = 'hydrocarbon';
 fuel_type_upper = 'hydrogen';
 
-num_eng_stg1 = 5; % Number of engines each stage
-num_eng_stg2 = 1;
+num_eng_stg1 = 6; % Number of engines each stage
+num_eng_stg2 = 3;
 num_eng_stg3 = 1;
 
 % --- Hydrogen Engine
@@ -204,7 +204,13 @@ launch_vehicle_optimal_solution(x0, Isp1, Isp2, Isp3, m_upper);
 % We probably need to check the thrust of each stage is reasonable? Since the bottom 3 stage is lift off from earth surface, 
 % I figured the 8km/s delta V includes some cosine loss during lift off, but we still need to aim for a reasonable thrust-to-weight ratio until we reach orbit.
 % Perhaps we can use F9 or Star ship's TWR as reference.
+TWR_stg_1 = F_HC * num_eng_stg1 / (m_1 * 9.806);
+TWR_stg_2 = F_HC * num_eng_stg2 / (m_2 * 9.806);
+TWR_stg_3 = F_HC * num_eng_stg3 / (m_3 * 9.806);
 
+m_engine_stg_1 = num_eng_stg1 * m_engine_HC;
+m_engine_stg_2 = num_eng_stg2 * m_engine_HC;
+m_engine_stg_3 = num_eng_stg3 * m_engine_HC;
 
 %% ----------------- Propellant Volume Calculations ------------------
 % Densities of propellants (kg/m^3) from Sutton
