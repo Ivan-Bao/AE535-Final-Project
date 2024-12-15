@@ -376,6 +376,7 @@ fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
+fprintf('Pressure drop across injectors: %.2f Pa.\n', DeltaP);
 
 % Add spacing between CH4 and H2 outputs for better console formatting
 fprintf('\n====================\n\n');
@@ -448,6 +449,7 @@ fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
+fprintf('Pressure drop across injectors: %.2f Pa.\n', DeltaP);
 
 
 % --------------------Plotting---------------------%
