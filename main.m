@@ -378,16 +378,16 @@ L_star = 80; % Characteristic chamber length in cm for LOX/CH4
 L_chamber = (L_star / 100) * A_chamber / A_throat; % Actual chamber length in meters
 
 % To claculate the combustion chamber and throat diameter
-Cc_dia = sqrt(A_chamber/3.14);
-Throat_dia = sqrt(A_throat/3.14);
+Cc_radius = sqrt(A_chamber/3.14);
+Throat_radius = sqrt(A_throat/3.14);
 
 % Display chamber design results
 fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
-fprintf('Diameter of Combustion Chamber: %.4f m\n', Cc_dia);
-fprintf('Diameter of Throat: %.4f m\n', Throat_dia);
+fprintf('Radius of Combustion Chamber: %.4f m\n', Cc_radius);
+fprintf('Radius of Throat: %.4f m\n', Throat_radius);
 
 % Add spacing between CH4 and H2 outputs for better console formatting
 fprintf('\n====================\n\n');
@@ -454,16 +454,16 @@ A_chamber = Ac_At * A_throat; % Calculate chamber cross-sectional area
 % Calculate characteristic chamber length (L*) and actual chamber length
 L_star = 56; % Characteristic chamber length in cm for LOX/H2
 L_chamber = (L_star / 100) * A_chamber / A_throat; % Actual chamber length in meters
-Cc_dia = sqrt(A_chamber/3.14); % in meters
-Throat_dia = sqrt(A_throat/3.14); % in meters
+Cc_radius = sqrt(A_chamber/3.14); % in meters
+Throat_radius = sqrt(A_throat/3.14); % in meters
 
 % Display chamber design results
 fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
-fprintf('Diameter of Combustion Chamber: %.4f m\n', Cc_dia);
-fprintf('Diameter of Throat: %.4f m\n', Throat_dia);
+fprintf('Radius of Combustion Chamber: %.4f m\n', Cc_radius);
+fprintf('Radius of Throat: %.4f m\n', Throat_radius);
 
 % --------------------Plotting---------------------%
 
