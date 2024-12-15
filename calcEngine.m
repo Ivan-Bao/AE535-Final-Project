@@ -1,4 +1,4 @@
-function [Me, Te, Pe, ue, Ae_At, F, Isp, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m ,noz_ex_rad_1m]=calcEngine(in, optimal_mode, trunc_length, scale) % chamber pressure & temperature are specified as input parameters. These are constrained by current technology limits.
+function [Me, Te, Pe, ue, Ae_At, m_dot, F, Isp, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m ,noz_ex_rad_1m]=calcEngine(in, optimal_mode, trunc_length, scale) % chamber pressure & temperature are specified as input parameters. These are constrained by current technology limits.
     % We assume the engine is optimized at either sea level and vacuum, and ignore off-point of operation situations like during
     % the ascend phase of first stage, transition between sea level and vacuum while first stage is only optimize for sea level. 
     % Assuming everything downstream of combustion chamber 
