@@ -29,14 +29,14 @@ num_eng_stg3 = 1;
 HY_Chamber_Pres = 160 * 1e5; % Pa, chamber pressure
 HY_throat_area = 0.1; % m2, throat area
 R_c_HY = 0.2; % m, engine chamber radius
-L_c_HY = 0.73; % m, engine chamber axial length
+L_c_HY = 0.5; % m, engine chamber axial length
 trunc_length_HY = 20; % m, the length we truncate off the engine nozzle
 
 % --- Hydrocarbon(LCH4) Engine
 HC_Chamber_Pres = 160 * 1e5; % Pa
 HC_throat_area = 0.2; % m2, throat area
 R_c_HC = 0.2; % m, engine chamber radius
-L_c_HC = 1.04; % m, engine chamber axial length
+L_c_HC = 0.5; % m, engine chamber axial length
 trunc_length_HC = 3; % m, the length we truncate off the engine nozzle
 
 % --- RP1 Engine
@@ -66,7 +66,7 @@ in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = HY_Chamber_Pres; % Pa, hydrogen engine chamber pressure
 in.At = HY_throat_area; % Throat area of hydrogen engine
 in.throat_width = sqrt(HY_throat_area); % Assume square nozzle
-[Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, mdot_HY, F_HY, Isp_HY, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m] = calcEngine(in, 'vacuum', trunc_length_HY, scale);
+[Me_HY, Te_HY, Pe_HY, ue_HY, Ae_At_HY, F_HY, Isp_HY, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m] = calcEngine(in, 'vacuum', trunc_length_HY, scale);
 in.Me = Me_HY;
 m_engine_HY = calcEngineMass(in, trunc_index, rho_wall, R_c_HY, L_c_HY, sigma_h, xw, yw, scale, Prat, Xmesh);
 nozzle_len_HY = sqrt(HY_throat_area/pi) * noz_len_1m; % Nozzle length
@@ -82,7 +82,7 @@ in.R_specific = 1000*R/23.36; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = HC_Chamber_Pres; % Pa, methane engine chamber pressure
 in.At = HC_throat_area; % Throat area of methane engine
 in.throat_width = sqrt(HC_throat_area); % Assume square nozzle
-[Me_HC, Te_HC, Pe_HC, ue_HC, Ae_At_HC, mdot_HC, F_HC, Isp_HC, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m]=calcEngine(in, 'sea level', trunc_length_HC, scale);
+[Me_HC, Te_HC, Pe_HC, ue_HC, Ae_At_HC, F_HC, Isp_HC, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m]=calcEngine(in, 'sea level', trunc_length_HC, scale);
 in.Me = Me_HC;
 m_engine_HC = calcEngineMass(in, trunc_index, rho_wall, R_c_HC, L_c_HC, sigma_h, xw, yw, scale, Prat, Xmesh);
 nozzle_len_HC = sqrt(HC_throat_area/pi) * noz_len_1m; % Nozzle length
@@ -99,7 +99,7 @@ in.R_specific = 1000*R/25.035; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = RP_Chamber_Pres; % Pa, RP1 engine chamber pressure
 in.At = RP_throat_area; % Throat area of RP1 engine
 in.throat_width = sqrt(RP_throat_area); % Assume square nozzle
-[Me_RP, Te_RP, Pe_RP, ue_RP, Ae_At_RP, mdot_RP, F_RP, Isp_RP, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m]=calcEngine(in, 'sea level', trunc_length_RP, scale);
+[Me_RP, Te_RP, Pe_RP, ue_RP, Ae_At_RP, F_RP, Isp_RP, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m]=calcEngine(in, 'sea level', trunc_length_RP, scale);
 in.Me = Me_RP;
 m_engine_RP = calcEngineMass(in, trunc_index, rho_wall, R_c_RP, L_c_RP, sigma_h, xw, yw, scale, Prat, Xmesh);
 nozzle_len_RP = sqrt(RP_throat_area/pi) * noz_len_1m; % Nozzle length
@@ -113,7 +113,7 @@ in.R_specific = 1000*R/13.582; % J K-1 kg-1, specific gas constant of exhaust
 in.P0 = HYSea_Chamber_Pres; % Pa, Sea level hydrogen engine chamber pressure
 in.At = HYSea_throat_area; % Throat area of sea level hydrogen engine
 in.throat_width = sqrt(HYSea_throat_area); % Assume square nozzle
-[Me_HYSea, Te_HYSea, Pe_HYSea, ue_HYSea, Ae_At_HYSea, mdot_HYSea ,F_HYSea, Isp_HYSea, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m]=calcEngine(in, 'sea level', trunc_length_HYSea, scale);
+[Me_HYSea, Te_HYSea, Pe_HYSea, ue_HYSea, Ae_At_HYSea, F_HYSea, Isp_HYSea, xw, yw, trunc_index, Prat, Xmesh, noz_len_1m, noz_ex_rad_1m]=calcEngine(in, 'sea level', trunc_length_HYSea, scale);
 in.Me = Me_HYSea;
 m_engine_HYSea = calcEngineMass(in, trunc_index, rho_wall, R_c_HYSea, L_c_HYSea, sigma_h, xw, yw, scale, Prat, Xmesh);
 nozzle_len_HYSea = sqrt(HYSea_throat_area/pi) * noz_len_1m; % Nozzle length
@@ -306,47 +306,45 @@ disp(['Oxidizer Volume (m^3): ', num2str(V_oxidizer_upper)]);
 disp(['Total Volume (m^3): ', num2str(V_propellant_upper)]);
 
 %%  ----------------- Injector Analysis: -------------------------------
+clc
 % ------------ CH4 ------
 % Injector Design with Dynamic Cd Selection
-fprintf('\n====================\n');
-fprintf('\t CH4 Engines Injector Analysis:\n\n');
-
-% Define chamber conditions and propellant densities
 P_c = HC_Chamber_Pres; % Chamber pressure in Pa
 DeltaP_ratio = 0.2; % Pressure drop ratio
-DeltaP = DeltaP_ratio * P_c; % Calculate pressure drop across injectors
-rho_fuel = density_CH4; % Density of CH4 in kg/m^3
-rho_oxidizer = density_O2; % Density of LOX in kg/m^3
+DeltaP = DeltaP_ratio * P_c; % Pressure drop across injectors
+rho_fuel = 424; % kg/m^3 for CH4
+rho_oxidizer = 1140; % kg/m^3 for LOX
 
-% Total mass flow and O/F ratio
-total_m_dot = mdot_HC; % Total mass flow rate in kg/s
-O_F_ratio = OF_ratio_CH4; % Oxidizer-to-Fuel ratio for CH4 and LOX
+total_m_dot = 1.77e3; % Total mass flow rate in kg/s
+O_F_ratio = 4; % Oxidizer-to-Fuel ratio for CH4 and LOX
 
-% Calculate mass flow rates for fuel and oxidizer
-m_dot_fuel = total_m_dot / (1 + O_F_ratio); % Calculate fuel mass flow rate
-m_dot_oxidizer = total_m_dot - m_dot_fuel; % Remaining flow rate is oxidizer
+% Calculate mass flow rates based on O/F ratio
+m_dot_fuel = total_m_dot / (1 + O_F_ratio); % Mass flow rate of fuel in kg/s
+m_dot_oxidizer = total_m_dot - m_dot_fuel; % Mass flow rate of oxidizer in kg/s
 
-% Injector orifice design parameters
-orifice_type = 'short-tube-rounded'; % Specify orifice type (rounded short-tube)
-C_d = 0.90; % Discharge coefficient for the selected orifice type
-d_orifice = 1.57e-3; % Diameter of a single orifice in meters
+% Define Orifice Type (e.g., 'sharp-edged', 'short-tube-rounded', etc.)
+orifice_type = 'short-tube-rounded'; % Short-tube with rounded entrance selected (L/D > 3)
+
+% Initialize Cd based on orifice type and diameter
+% For a short-tube with rounded entrance and diameter of 1.57 mm, Cd = 0.90
+C_d = 0.90;
+d_orifice = 1.57e-3; % Orifice diameter in meters
 
 % Calculate orifice area based on diameter
 A_orifice = pi * (d_orifice / 2)^2; % Area of a single orifice in m^2
 
-% Calculate injection velocities for fuel and oxidizer
-v_fuel = C_d * sqrt(2 * DeltaP / rho_fuel); % Injection velocity for fuel in m/s
-v_oxidizer = C_d * sqrt(2 * DeltaP / rho_oxidizer); % Injection velocity for oxidizer in m/s
+% Injection velocity
+v_fuel = C_d * sqrt(2 * DeltaP / rho_fuel); % m/s
+v_oxidizer = C_d * sqrt(2 * DeltaP / rho_oxidizer); % m/s
 
-% Calculate mass flow rate per orifice for fuel and oxidizer
+% Calculate the required number of injectors
 m_dot_fuel_per_orifice = C_d * A_orifice * sqrt(2 * rho_fuel * DeltaP); % Fuel flow rate per orifice
 m_dot_oxidizer_per_orifice = C_d * A_orifice * sqrt(2 * rho_oxidizer * DeltaP); % Oxidizer flow rate per orifice
 
-% Determine the required number of orifices
-num_fuel_injectors = ceil(m_dot_fuel / m_dot_fuel_per_orifice); % Total fuel injectors needed
-num_oxidizer_injectors = ceil(m_dot_oxidizer / m_dot_oxidizer_per_orifice); % Total oxidizer injectors needed
+num_fuel_injectors = ceil(m_dot_fuel / m_dot_fuel_per_orifice); % Total fuel injectors required
+num_oxidizer_injectors = ceil(m_dot_oxidizer / m_dot_oxidizer_per_orifice); % Total oxidizer injectors required
 
-% Display injector design results
+% Display results
 fprintf('Selected orifice type: %s\n', orifice_type);
 fprintf('Fuel injector orifice diameter: %.2f mm\n', d_orifice * 1e3);
 fprintf('Oxidizer injector orifice diameter: %.2f mm\n', d_orifice * 1e3);
@@ -356,93 +354,23 @@ fprintf('Number of fuel injectors: %d\n', num_fuel_injectors);
 fprintf('Number of oxidizer injectors: %d\n', num_oxidizer_injectors);
 
 % Chamber Design
-% Define chamber throat parameters
-A_throat = HC_throat_area; % Throat area in m^2
-R_throat = sqrt(A_throat / pi); % Calculate throat radius from area
+% Using L* (Characteristic chamber length) for Liquid Oxygen and Liquid Methane
+A_throat = HC_throat_area; % m^2, example throat area (modify as needed)
+R_throat = sqrt(A_throat / pi); % Throat radius in meters
 
-% Define and calculate chamber-to-throat area ratio
-Ac_At = 2; % Chamber-to-throat area ratio
-A_chamber = Ac_At * A_throat; % Calculate chamber cross-sectional area
+% Update Ac/At to 2 and calculate new chamber parameters
+Ac_At = 2; % Selected chamber to throat area ratio
+A_chamber = Ac_At * A_throat; % Chamber area
 
-% Calculate characteristic chamber length (L*) and actual chamber length
-L_star = 100; % Characteristic chamber length in cm for LOX/CH4
-L_chamber = (L_star / 100) * A_chamber / A_throat; % Actual chamber length in meters
+% L_star is recalculated based on Ac/At = 2
+L_star = 100; % cm, updated characteristic chamber length (example for LOX/CH4)
+L_chamber = (L_star / 100) * A_chamber / A_throat; % Convert L* to meters
 
-% Display chamber design results
+% Display updated chamber dimensions and area ratio
 fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
-
-% Add spacing between CH4 and H2 outputs for better console formatting
-fprintf('\n====================\n');
-
-% ------------ H2 ------
-% Injector Design for LOX/H2 with Dynamic Cd Selection
-fprintf('\t H2 Engines Injector Analysis:\n\n');
-
-% Define chamber conditions and propellant densities
-P_c = HY_Chamber_Pres; % Chamber pressure in Pa for H2 engine
-DeltaP_ratio = 0.2; % Pressure drop ratio
-DeltaP = DeltaP_ratio * P_c; % Calculate pressure drop across injectors
-rho_fuel = density_H2; % Density of H2 in kg/m^3
-rho_oxidizer = density_O2; % Density of LOX in kg/m^3
-
-% Total mass flow and O/F ratio
-total_m_dot = mdot_HY; % Total mass flow rate in kg/s
-O_F_ratio = OF_ratio_H2; % Oxidizer-to-Fuel ratio for LOX and H2
-
-% Calculate mass flow rates for fuel and oxidizer
-m_dot_fuel = total_m_dot / (1 + O_F_ratio); % Calculate fuel mass flow rate
-m_dot_oxidizer = total_m_dot - m_dot_fuel; % Remaining flow rate is oxidizer
-
-% Injector orifice design parameters
-orifice_type = 'short-tube-rounded'; % Specify orifice type (rounded short-tube)
-C_d = 0.90; % Discharge coefficient for the selected orifice type
-d_orifice = 1.57e-3; % Diameter of a single orifice in meters
-
-% Calculate orifice area based on diameter
-A_orifice = pi * (d_orifice / 2)^2; % Area of a single orifice in m^2
-
-% Calculate injection velocities for fuel and oxidizer
-v_fuel = C_d * sqrt(2 * DeltaP / rho_fuel); % Injection velocity for fuel in m/s
-v_oxidizer = C_d * sqrt(2 * DeltaP / rho_oxidizer); % Injection velocity for oxidizer in m/s
-
-% Calculate mass flow rate per orifice for fuel and oxidizer
-m_dot_fuel_per_orifice = C_d * A_orifice * sqrt(2 * rho_fuel * DeltaP); % Fuel flow rate per orifice
-m_dot_oxidizer_per_orifice = C_d * A_orifice * sqrt(2 * rho_oxidizer * DeltaP); % Oxidizer flow rate per orifice
-
-% Determine the required number of orifices
-num_fuel_injectors = ceil(m_dot_fuel / m_dot_fuel_per_orifice); % Total fuel injectors needed
-num_oxidizer_injectors = ceil(m_dot_oxidizer / m_dot_oxidizer_per_orifice); % Total oxidizer injectors needed
-
-% Display injector design results
-fprintf('Selected orifice type: %s\n', orifice_type);
-fprintf('Fuel injector orifice diameter: %.2f mm\n', d_orifice * 1e3);
-fprintf('Oxidizer injector orifice diameter: %.2f mm\n', d_orifice * 1e3);
-fprintf('Injection velocity (fuel): %.2f m/s\n', v_fuel);
-fprintf('Injection velocity (oxidizer): %.2f m/s\n', v_oxidizer);
-fprintf('Number of fuel injectors: %d\n', num_fuel_injectors);
-fprintf('Number of oxidizer injectors: %d\n', num_oxidizer_injectors);
-
-% Chamber Design
-% Define chamber throat parameters
-A_throat = HY_throat_area; % Throat area in m^2 for H2 engine
-R_throat = sqrt(A_throat / pi); % Calculate throat radius from area
-
-% Define and calculate chamber-to-throat area ratio
-Ac_At = 2; % Chamber-to-throat area ratio
-A_chamber = Ac_At * A_throat; % Calculate chamber cross-sectional area
-
-% Calculate characteristic chamber length (L*) and actual chamber length
-L_star = 100; % Characteristic chamber length in cm for LOX/H2
-L_chamber = (L_star / 100) * A_chamber / A_throat; % Actual chamber length in meters
-
-% Display chamber design results
-fprintf('Characteristic chamber length (L*): %.2f cm\n', L_star);
-fprintf('Chamber area: %.4f m^2\n', A_chamber);
-fprintf('Chamber length: %.2f m\n', L_chamber);
-fprintf('Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
 
 
 % --------------------Plotting---------------------%
