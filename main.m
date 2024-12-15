@@ -35,14 +35,14 @@ trunc_length_HY = 20; % m, the length we truncate off the engine nozzle
 % --- Hydrocarbon(LCH4) Engine
 HC_Chamber_Pres = 160 * 1e5; % Pa
 HC_throat_area = 0.2; % m2, throat area
-R_c_HC = 0.2; % m, engine chamber radius
+R_c_HC = 0.28; % m, engine chamber radius
 L_c_HC = 1.04; % m, engine chamber axial length
 trunc_length_HC = 3; % m, the length we truncate off the engine nozzle
 
 % --- RP1 Engine
 RP_Chamber_Pres = 160 * 1e5; % Pa
 RP_throat_area = 0.2; % m2, throat area
-R_c_RP = 0.2; % m, engine chamber radius
+R_c_RP = 0.28; % m, engine chamber radius
 L_c_RP = 0.5; % m, engine chamber axial length
 trunc_length_RP = 3; % m, the length we truncate off the engine nozzle
 
@@ -399,7 +399,7 @@ rho_fuel = density_H2; % Density of H2 in kg/m^3
 rho_oxidizer = density_O2; % Density of LOX in kg/m^3
 
 % Total mass flow and O/F ratio
-total_m_dot = 1.77e3; % Total mass flow rate in kg/s
+total_m_dot = 689.8321; % Total mass flow rate in kg/s
 O_F_ratio = OF_ratio_H2; % Oxidizer-to-Fuel ratio for LOX and H2
 
 % Calculate mass flow rates for fuel and oxidizer
