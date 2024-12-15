@@ -306,7 +306,6 @@ disp(['Oxidizer Volume (m^3): ', num2str(V_oxidizer_upper)]);
 disp(['Total Volume (m^3): ', num2str(V_propellant_upper)]);
 
 %%  ----------------- Injector Analysis: -------------------------------
-clc
 % ------------ CH4 ------
 % Injector Design with Dynamic Cd Selection
 fprintf('\n====================\n');
@@ -320,7 +319,7 @@ rho_fuel = density_CH4; % Density of CH4 in kg/m^3
 rho_oxidizer = density_O2; % Density of LOX in kg/m^3
 
 % Total mass flow and O/F ratio
-total_m_dot = 1.77e3; % Total mass flow rate in kg/s
+total_m_dot = mdot_HC; % Total mass flow rate in kg/s
 O_F_ratio = OF_ratio_CH4; % Oxidizer-to-Fuel ratio for CH4 and LOX
 
 % Calculate mass flow rates for fuel and oxidizer
@@ -390,7 +389,7 @@ rho_fuel = density_H2; % Density of H2 in kg/m^3
 rho_oxidizer = density_O2; % Density of LOX in kg/m^3
 
 % Total mass flow and O/F ratio
-total_m_dot = 689; % Total mass flow rate in kg/s
+total_m_dot = mdot_HY; % Total mass flow rate in kg/s
 O_F_ratio = OF_ratio_H2; % Oxidizer-to-Fuel ratio for LOX and H2
 
 % Calculate mass flow rates for fuel and oxidizer
