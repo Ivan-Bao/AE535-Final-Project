@@ -386,8 +386,8 @@ fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
-fprintf('Diameter of Combustion Chamber: %.2f m\n', Cc_dia);
-fprintf('Diameter of Throat: %.2f m\n', Throat_dia);
+fprintf('Diameter of Combustion Chamber: %.4f m\n', Cc_dia);
+fprintf('Diameter of Throat: %.4f m\n', Throat_dia);
 
 % Add spacing between CH4 and H2 outputs for better console formatting
 fprintf('\n====================\n\n');
@@ -462,8 +462,8 @@ fprintf('Updated Characteristic chamber length (L*): %.2f cm\n', L_star);
 fprintf('Updated Chamber area: %.4f m^2\n', A_chamber);
 fprintf('Updated Chamber length: %.2f m\n', L_chamber);
 fprintf('Updated Chamber to throat area ratio (Ac/At): %.2f\n', Ac_At);
-fprintf('Diameter of Combustion Chamber: %.2f m\n', Cc_dia);
-fprintf('Diameter of Throat: %.2f m\n', Throat_dia);
+fprintf('Diameter of Combustion Chamber: %.4f m\n', Cc_dia);
+fprintf('Diameter of Throat: %.4f m\n', Throat_dia);
 
 % --------------------Plotting---------------------%
 
