@@ -43,14 +43,14 @@ function [Me, Te, Pe, ue, Ae_At, m_dot, F, Isp, xw, yw, trunc_index, Prat, Xmesh
     Pe = mean(P0*Prat(:, mesh_index),'omitnan');
     Me = Mach_from_expansion(Pe, P0, gamma); % Now we compute the exit mach number given the truncated exit pressure
 
-    throat = sqrt(At/pi)/scale;
+    throat = 0.1784;
     clf
     fig = figure();
-    pcolor(throat.*X(:, 1:mesh_index),throat.*Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
+    pcolor(throat.*X(:, 1:mesh_index),Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
     hold on
-    pcolor(throat.*X(:, 1:mesh_index),-throat.*Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
-    plot(throat.*xw(1:trunc_index),throat.*yw(1:trunc_index),'k-','LineWidth',2) 
-    plot(throat.*xw(1:trunc_index),-throat.*yw(1:trunc_index),'k-','LineWidth',2)
+    pcolor(X(:, 1:mesh_index),-Y(:, 1:mesh_index),Prat(:, 1:mesh_index))
+    plot(xw(1:trunc_index),yw(1:trunc_index),'k-','LineWidth',2) 
+    plot(xw(1:trunc_index),-yw(1:trunc_index),'k-','LineWidth',2)
     shading interp
     formatplot('$p / p_o$')
     uiwait(fig)
